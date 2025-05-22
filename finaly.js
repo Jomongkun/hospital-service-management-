@@ -66,7 +66,7 @@ let total = price1 + price2; // Calculate total price of services
 let discount = isSenior ? total * 0.10 : 0; // Calculate discount (10% for seniors)
 let finalAmount = total - discount; // Calculate final amount after discount
 
-// 
+// Print the receipt
 console.log("\n===== RECEIPT =====");
 console.log("Patient Name:", name);// Show patient name
 console.log("Availed Services:");   // List selected services
