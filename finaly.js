@@ -1,78 +1,78 @@
-//Get patient info
-let name = prompt("Enter your name:"); // Ask the user to enter their name
-let age = parseInt(prompt("Enter your age:")); // Ask the user to enter their age and convert the input string to a number
-let gender = prompt("Enter your gender:"); // Ask the user to enter their gender
-let address = prompt("Enter your address:"); // Ask the user to enter their address
+// Admission info
+// Prompts the user for personal information
+let name = prompt("Enter your name:");
+let age = prompt("Enter your age:");
+let gender = prompt("Enter your gender:");
+let address = prompt("Enter your address:");
+alert("Admission complete!");
 
-// Display patient info
-console.log("Admission Complete!");
-console.log("Name:", name);       // Display name
-console.log("Age:", age);         // Display age
-console.log("Gender:", gender);   // Display gender
-console.log("Address:", address); // Display address
+// Simple services list
+// A list of hospital services with names and prices
+let services = [
+  { name: "Drug Test", price: 500 },
+  { name: "X-Ray", price: 1000 },
+  { name: "General Check-Up", price: 300 },
+  { name: "Cardiology", price: 800 },
+  { name: "Appendectomy", price: 5000 }
+];
 
-//Check if the user is a senior citizen (60 years old or above)
-let isSenior = age >= 60; // true if age is 60 or more
-console.log("Senior Citizen:", isSenior ? "Yes (10% discount applied)" : "No"); // Print whether the patient is a senior
+// Selected services by user
+let selectedServices = [];
 
-// Show list of available hospital services
-console.log("\nAvailable Services:");
-console.log("1. Drug Test - ₱500");            // Option 1
-console.log("2. X-Ray - ₱1000");               // Option 2
-console.log("3. General Check-Up - ₱300");     // Option 3
+let exit = false; // Controls the main menu loop
 
-// Let the user choose two services by entering service numbers
-let choice1 = prompt("Enter the number of your first service (1-3):");  // First service choice
-let choice2 = prompt("Enter the number of your second service (1-3):"); // Second service choice
+// Loop to keep showing the menu until the user exits
+while (!exit) {
+  // Displays options to the user
+  let choice = prompt(
+    "Choose an option:\n1. View Services\n2. Add Service\n3. View Selected\n4. Checkout & Exit"
+  );
 
-// Initialize variables to store first service name and price
-let service1 = "";
-let price1 = 0;
+  if (choice === "1") {
+    // Display the list of available services
+    let list = "";
+    for (let i = 0; i < services.length; i++) {
+      list += (i + 1) + ". " + services[i].name + " - ₱" + services[i].price + "\n";
+    }
+    alert("Available Services:\n" + list);
 
-// Determine first service based on user input
-if (choice1 === "1") {
-  service1 = "Drug Test";
-  price1 = 500;
-} else if (choice1 === "2") {
-  service1 = "X-Ray";
-  price1 = 1000;
-} else if (choice1 === "3") {
-  service1 = "General Check-Up";
-  price1 = 300;
-} else {
-  console.log("Invalid first service."); // Handle invalid input
+  } else if (choice === "2") {
+    // Add a selected service to the user's list
+    let index = prompt("Enter service number to add (1-5):");
+    let service = services[index - 1];
+    if (service) {
+      selectedServices.push(service); // Adds the selected service to the list
+      alert(service.name + " added!");
+    } else {
+      alert("Invalid service number.");
+    }
+
+  } else if (choice === "3") {
+    // Display selected services
+    if (selectedServices.length === 0) {
+      alert("No services selected yet.");
+    } else {
+      let list = "";
+      for (let i = 0; i < selectedServices.length; i++) {
+        list += (i + 1) + ". " + selectedServices[i].name + " - ₱" + selectedServices[i].price + "\n";
+      }
+      alert("Selected Services:\n" + list);
+    }
+
+  } else if (choice === "4") {
+    // Checkout and display receipt
+    let total = 0;
+    let receipt = "Receipt for " + name + ":\n\n";
+    for (let i = 0; i < selectedServices.length; i++) {
+      receipt += "- " + selectedServices[i].name + ": ₱" + selectedServices[i].price + "\n";
+      total += selectedServices[i].price;
+    }
+    receipt += "\nTotal: ₱" + total;
+    alert(receipt + "\n\nThank you!");
+    exit = true; // Ends the loop
+
+  } else {
+    // Handles invalid menu choices
+    alert("Invalid option. Try again.");
+  }
 }
-
-// Initialize variables to store second service name and price
-let service2 = "";
-let price2 = 0;
-
-// Determine second service based on user input
-if (choice2 === "1") {
-  service2 = "Drug Test";
-  price2 = 500;
-} else if (choice2 === "2") {
-  service2 = "X-Ray";
-  price2 = 1000;
-} else if (choice2 === "3") {
-  service2 = "General Check-Up";
-  price2 = 300;
-} else {
-  console.log("Invalid second service."); // Handle invalid input
-}
-
-//Compute total and discount
-let total = price1 + price2; // Calculate total price of services
-let discount = isSenior ? total * 0.10 : 0; // Calculate discount (10% for seniors)
-let finalAmount = total - discount; // Calculate final amount after discount
-
-// Print the receipt
-console.log("\n===== RECEIPT =====");
-console.log("Patient Name:", name);// Show patient name
-console.log("Availed Services:");   // List selected services
-console.log("- " + service1 + ": ₱" + price1); // First service
-console.log("- " + service2 + ": ₱" + price2); // Second service
-console.log("Subtotal: ₱" + total);            // Before discount
-console.log("Senior Discount: ₱" + discount);  // Discount amount
-console.log("Total Amount to Pay: ₱" + finalAmount); // Final total
-console.log("Thank you for using our hospital services!"); // Closing message
